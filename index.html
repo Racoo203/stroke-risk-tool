@@ -1,157 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Calculadora de Riesgo y Recomendaciones EVCH</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; max-width: 750px; line-height: 1.6; }
-        .form-group { margin-bottom: 15px; }
-        label { font-weight: bold; display: block; margin-bottom: 5px; }
-        .checkbox-group label { font-weight: normal; display: inline-block; margin-bottom: 8px; }
-        button { padding: 10px 15px; background-color: #0056b3; color: white; border: none; cursor: pointer; border-radius: 4px; font-size: 16px; }
-        button:hover { background-color: #004494; }
-        .output-section { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
-        #recomendaciones { background-color: #e9ecef; border-left: 4px solid #0056b3; }
-        #estadisticas { background-color: #fff3cd; border-left: 4px solid #ffc107; margin-top: 15px; }
-        .score-high { color: #dc3545; font-weight: bold; }
-        .score-med { color: #fd7e14; font-weight: bold; }
-        .score-low { color: #28a745; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Evaluación EVCH</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+<main class="container">
+  <h1>Evaluación Clínica EVCH</h1>
+  <p class="subtitle">Herramienta de screening aditivo basada en factores clínicos.</p>
 
-    <h2>Calculadora de Riesgo y Recomendaciones para EVCH</h2>
-    <p>Ingrese los datos del paciente para obtener estadísticas de riesgo y recomendaciones basadas en las guías clínicas.</p>
+  <form id="riskForm"></form>
 
-    <div class="form-group">
-        <label>Edad:</label>
-        <input type="number" id="edad" placeholder="Ej. 55" required>
-    </div>
+  <div class="actions">
+    <button type="button" id="calculateBtn">Calcular Riesgo</button>
+    <button type="button" id="clearBtn">Limpiar Campos</button>
+  </div>
 
-    <div class="form-group">
-        <label>Género:</label>
-        <select id="genero">
-            <option value="Femenino">Femenino</option>
-            <option value="Masculino">Masculino</option>
-        </select>
-    </div>
+  <section id="results" hidden>
+    <h2>Resultado</h2>
+    <div id="scoreBadge"></div>
+    <ul id="riskDetails"></ul>
+    <ul id="recommendations"></ul>
+    <button id="downloadBtn">Descargar Reporte</button>
+  </section>
 
-    <div class="form-group checkbox-group">
-        <label><strong>Factores de Riesgo (Seleccione todos los que apliquen):</strong></label><br>
-        
-        <input type="checkbox" id="hta" value="hta"> <label for="hta">Hipertensión Arterial</label><br>
-        <input type="checkbox" id="tabaquismo" value="tabaquismo"> <label for="tabaquismo">Tabaquismo / Vapeadores</label><br>
-        <input type="checkbox" id="embarazo" value="embarazo"> <label for="embarazo">Embarazo o Posparto temprano</label><br>
-        <input type="checkbox" id="anticonceptivos" value="anticonceptivos"> <label for="anticonceptivos">Uso de Anticonceptivos Orales</label><br>
-        
-        <input type="checkbox" id="antiplaquetaria" value="antiplaquetaria"> <label for="antiplaquetaria">Terapia Antiplaquetaria (Aspirina/Clopidogrel)</label><br>
-        <input type="checkbox" id="hepatica" value="hepatica"> <label for="hepatica">Enfermedad Hepática Crónica</label><br>
-        <input type="checkbox" id="simpaticomimeticos" value="simpaticomimeticos"> <label for="simpaticomimeticos">Abuso de drogas (Simpaticomiméticos/Ilícitas)</label><br>
-        <input type="checkbox" id="alcohol" value="alcohol"> <label for="alcohol">Alcoholismo Crónico / Abuso de alcohol</label><br>
-    </div>
+  <footer class="disclaimer">
+    ⚠️ Esta herramienta es solo para screening. No sustituye evaluación médica.
+  </footer>
+</main>
 
-    <button onclick="calcularYRecomendar()">Analizar Riesgo</button>
-
-    <div id="estadisticas" class="output-section"></div>
-    <div id="recomendaciones" class="output-section"></div>
-
-    <script>
-        function calcularYRecomendar() {
-            // Variables de entrada
-            let edad = parseInt(document.getElementById("edad").value);
-            let genero = document.getElementById("genero").value;
-            
-            // Contenedores de salida
-            let statsDiv = document.getElementById("estadisticas");
-            let recsDiv = document.getElementById("recomendaciones");
-            
-            let statsOutput = "<h3>Estadísticas y Puntaje de Riesgo:</h3><ul>";
-            let recsOutput = "<h3>Recomendaciones Clínicas:</h3><ul>";
-            let puntajeAcumulado = 0;
-
-            // --- LÓGICA DE ESTADÍSTICAS Y PUNTAJE ---
-            
-            // Edad
-            if (edad >= 45 && edad <= 54) {
-                statsOutput += "<li><strong>Edad (45-54):</strong> Tasa de referencia de 22.1 por cada 100,000 personas-año.</li>";
-            } else if (edad >= 55 && edad <= 64) {
-                statsOutput += "<li><strong>Edad (55-64):</strong> Índice de Riesgo (IR) de 2.63.</li>";
-            } else if (edad >= 65 && edad <= 74) {
-                statsOutput += "<li><strong>Edad (65-74):</strong> Índice de Riesgo (IR) de 5.</li>";
-            } else if (edad >= 75 && edad <= 84) {
-                statsOutput += "<li><strong>Edad (75-84):</strong> Índice de Riesgo (IR) de 6.6.</li>";
-            }
-            if (edad >= 55) {
-                statsOutput += "<li><em>Nota:</em> En pacientes mayores de 55 años, el riesgo relativo estimado es de 7.</li>";
-            }
-
-            // Género
-            if (genero === "Masculino") {
-                statsOutput += "<li><strong>Género Masculino:</strong> Presenta un 60% más de riesgo en comparación con las mujeres (0.02-0.06% al año).</li>";
-            }
-
-            // Sistema de Puntaje Sugerido
-            if (document.getElementById("antiplaquetaria").checked) {
-                puntajeAcumulado += 1;
-                statsOutput += "<li><strong>Terapia Antiplaquetaria:</strong> Aumenta un 38% el riesgo de sangrado intracraneal (HR ≈ 1.38). <em>Puntaje sumado: 1 (Riesgo Bajo).</em></li>";
-                recsOutput += "<li><strong>Terapia Antitrombótica/Antiplaquetaria:</strong> Evaluar riesgo/beneficio con puntuaciones de fragilidad. Preferir ACOD sobre antagonistas de vitamina K.</li>";
-            }
-            if (document.getElementById("hepatica").checked) {
-                puntajeAcumulado += 2;
-                statsOutput += "<li><strong>Enfermedad Hepática Crónica:</strong> Fibrosis hepática avanzada tiene un HR ≈ 2.14. <em>Puntaje sumado: 2 (Riesgo Intermedio).</em></li>";
-            }
-            if (document.getElementById("simpaticomimeticos").checked) {
-                puntajeAcumulado += 3;
-                statsOutput += "<li><strong>Abuso de Simpaticomiméticos:</strong> El uso de drogas ilícitas aumenta ~6.5 veces el riesgo. <em>Puntaje sumado: 3 (Riesgo Elevado).</em></li>";
-                recsOutput += "<li><strong>Abuso de Sustancias:</strong> Detección y asesoramiento sobre el aumento severo del riesgo de EVC.</li>";
-            }
-            if (document.getElementById("alcohol").checked) {
-                statsOutput += "<li><strong>Abuso de Alcohol:</strong> Probabilidad de desarrollar un EVCH del 6.6%.</li>";
-            }
-
-            // Mostrar Puntaje Total
-            let clasePuntaje = "score-low";
-            if (puntajeAcumulado == 2) clasePuntaje = "score-med";
-            if (puntajeAcumulado >= 3) clasePuntaje = "score-high";
-            
-            statsOutput += `</ul><p><strong>Puntaje Modificable Calculado: <span class="${clasePuntaje}">${puntajeAcumulado} puntos</span></strong> (1=Bajo, 2=Intermedio, 3+=Alto)</p>`;
-
-
-            // --- LÓGICA DE RECOMENDACIONES CLÍNICAS RESTANTES ---
-            let hasExtraRecs = false;
-
-            if (document.getElementById("hta").checked) {
-                statsOutput += "<li><strong>Hipertensión:</strong> Riesgo leve (10%) a severo (25%) dependiendo del control.</li>";
-                recsOutput += "<li><strong>Hipertensión:</strong> Iniciar antihipertensivos si PAS >= 140 mmHg o PAD >= 90 mmHg. Meta < 130/80 mmHg usando 2 o más fármacos.</li>";
-                hasExtraRecs = true;
-            }
-            if (document.getElementById("tabaquismo").checked) {
-                recsOutput += "<li><strong>Tabaquismo:</strong> Abstinencia completa de tabaco, vapeadores y humo de segunda mano.</li>";
-                hasExtraRecs = true;
-            }
-            if (document.getElementById("anticonceptivos").checked) {
-                statsOutput += "<li><strong>Anticonceptivos:</strong> Riesgo aumentado (OR 1.39).</li>";
-                recsOutput += "<li><strong>Anticonceptivos Orales:</strong> Utilizar dosis más bajas de etinilestradiol para minimizar el riesgo de EVC.</li>";
-                hasExtraRecs = true;
-            }
-            if (document.getElementById("embarazo").checked) {
-                statsOutput += "<li><strong>Embarazo:</strong> Incidencia de stroke hemorrágico es hasta el 0.015%.</li>";
-                recsOutput += "<li><strong>Embarazo/Posparto:</strong> Si hay hipertensión grave (PAS >= 160 o PAD > 110), reducir la PA a < 160/110 mmHg lo antes posible.</li>";
-                hasExtraRecs = true;
-            }
-
-            if (!hasExtraRecs && puntajeAcumulado === 0) {
-                recsOutput += "<li><em>Mantener estilo de vida saludable y monitoreo de rutina. No se detectaron factores de riesgo modificables críticos.</em></li>";
-            }
-
-            recsOutput += "</ul>";
-
-            // Mostrar resultados
-            statsDiv.innerHTML = statsOutput;
-            recsDiv.innerHTML = recsOutput;
-            statsDiv.style.display = "block";
-            recsDiv.style.display = "block";
-        }
-    </script>
+<script src="app.js"></script>
 </body>
 </html>

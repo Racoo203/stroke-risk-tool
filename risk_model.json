@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "name": "EVCH Additive Risk Score",
+    "version": "1.0.0",
+    "disclaimer": "Screening tool only. Not a diagnostic instrument."
+  },
+
+  "questions": [
+    {
+      "id": "pas",
+      "label": "¿Cuánto es tu PAS?",
+      "type": "numeric",
+      "category": "Enfermedades no Transmisibles",
+      "thresholds": [
+        { "max": 129, "points": 1 },
+        { "max": 160, "points": 2 },
+        { "min": 161, "points": 3 }
+      ]
+    },
+    {
+      "id": "glucosa",
+      "label": "¿Cuánto es tu nivel de glucosa?",
+      "type": "numeric",
+      "category": "Enfermedades no Transmisibles",
+      "thresholds": [
+        { "max": 119, "points": 1 },
+        { "max": 200, "points": 2 },
+        { "min": 201, "points": 3 }
+      ]
+    },
+    {
+      "id": "edad",
+      "label": "Edad",
+      "type": "numeric",
+      "category": "Datos Personales",
+      "thresholds": [
+        { "max": 54, "points": 1 },
+        { "max": 64, "points": 2 },
+        { "min": 65, "points": 3 }
+      ]
+    },
+    {
+      "id": "sexo",
+      "label": "Sexo",
+      "type": "binary",
+      "category": "Datos Personales",
+      "options": {
+        "Mujer": 1,
+        "Hombre": 2
+      }
+    },
+
+    {
+      "id": "apo_mut",
+      "label": "Mutación Gen Apolipoproteína",
+      "type": "binary",
+      "category": "Mutaciones",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "amy_mut",
+      "label": "Mutación Proteína Amiloides",
+      "type": "binary",
+      "category": "Mutaciones",
+      "options": { "NO": 1, "SI": 2 }
+    },
+
+    {
+      "id": "alcoholismo",
+      "label": "Alcoholismo Crónico",
+      "type": "binary",
+      "category": "Toxicomanías",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "abuso_alcohol",
+      "label": "Abuso de Alcohol",
+      "type": "binary",
+      "category": "Toxicomanías",
+      "options": { "NO": 1, "SI": 3 }
+    },
+    {
+      "id": "sustancias",
+      "label": "Abuso de Sustancias",
+      "type": "binary",
+      "category": "Toxicomanías",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "metanfetaminas",
+      "label": "Abuso de Metanfetaminas",
+      "type": "binary",
+      "category": "Toxicomanías",
+      "options": { "NO": 1, "SI": 2 }
+    },
+
+    {
+      "id": "meningioma",
+      "label": "Meningioma",
+      "type": "binary",
+      "category": "Cáncer",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "glioblastoma",
+      "label": "Glioblastoma",
+      "type": "binary",
+      "category": "Cáncer",
+      "options": { "NO": 1, "SI": 2 }
+    },
+
+    {
+      "id": "antiagregacion",
+      "label": "Terapia Antiplaquetaria",
+      "type": "categorical",
+      "category": "Medicamentos",
+      "options": {
+        "NO": 1,
+        "SIMPLE": 2,
+        "DUAL": 3
+      }
+    }
+  ]
+}
