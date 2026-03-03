@@ -1,0 +1,71 @@
+{
+    "rules": [
+        {
+            "id": "hta",
+            "trigger": { "field": "pas", "min": 140 },
+            "recommendation": "Hipertensión arterial: Iniciar o intensificar tratamiento antihipertensivo. Meta recomendada <130/80 mmHg. Considerar terapia combinada con 2 o más fármacos."
+        },
+        {
+            "id": "antiplaquetaria",
+            "trigger": { "field": "antiagregacion", "minPoints": 2 },
+            "recommendation": "Terapia antiplaquetaria: Evaluar riesgo/beneficio de sangrado. Reevaluar indicación periódicamente y considerar fragilidad y escalas de riesgo hemorrágico."
+        },
+        {
+            "id": "alcohol",
+            "trigger": { "field": "abuso_alcohol", "minPoints": 3 },
+            "recommendation": "Abuso de alcohol: Recomendar cese inmediato. El abuso se asocia a picos hipertensivos y mayor riesgo de hemorragia intracerebral."
+        },
+        {
+            "id": "sustancias",
+            "trigger": { "field": "metanfetaminas", "minPoints": 2 },
+            "recommendation": "Abuso de sustancias simpaticomiméticas: Derivar para detección y tratamiento especializado. El riesgo de EVCH aumenta significativamente."
+        },
+        {
+            "id": "anticonceptivos",
+            "trigger": { "field": "antiagregacion", "exactPoints": 2 },
+            "recommendation": "Anticonceptivos orales: Considerar dosis más bajas de estrógenos para minimizar el riesgo de EVC hemorrágico."
+        },
+        {
+            "id": "embarazo",
+            "trigger": { "field": "embarazo", "exactPoints": 2 },
+            "recommendation": "Embarazo/posparto: Si existe hipertensión severa (PAS ≥160 mmHg), reducir la presión arterial a <160/110 mmHg lo antes posible."
+        },
+        {
+            "id": "glucosa_alta",
+            "trigger": { "field": "glucosa", "min": 200 },
+            "recommendation": "Hiperglucemia significativa: Optimizar control glucémico. La hiperglucemia se asocia a disfunción endotelial y mayor riesgo de eventos cerebrovasculares."
+        },
+        {
+            "id": "edad_avanzada",
+            "trigger": { "field": "edad", "min": 65 },
+            "recommendation": "Edad avanzada: Riesgo basal elevado. Priorizar control estricto de factores modificables y seguimiento clínico periódico."
+        },
+        {
+            "id": "apo_gen",
+            "trigger": { "field": "apo_mut", "exactPoints": 2 },
+            "recommendation": "Mutación genética asociada a riesgo vascular: Considerar evaluación neurológica y control estricto de factores modificables."
+        },
+        {
+            "id": "amiloide",
+            "trigger": { "field": "amy_mut", "exactPoints": 2 },
+            "recommendation": "Depósito amiloide cerebral: Asociado a fragilidad vascular. Evitar sobretratamiento antitrombótico y mantener vigilancia neurológica."
+        },
+        {
+            "id": "tumor_cerebral",
+            "trigger": { "field": "meningioma", "exactPoints": 2 },
+            "recommendation": "Lesión estructural cerebral conocida: Riesgo incrementado de sangrado intracraneal. Individualizar manejo clínico."
+        },
+        {
+            "id": "microbleeds",
+            "trigger": { "field": "microbleed", "minPoints": 2 },
+            "recommendation": "Microsangrados cerebrales previos: Indican fragilidad vascular. Reevaluar indicación de antitrombóticos y optimizar control tensional."
+        },
+        {
+            "id": "hepatico",
+            "trigger": { "field": "fibrosis", "exactPoints": 2 },
+            "recommendation": "Enfermedad hepática crónica: Asociada a alteraciones de coagulación. Monitorizar función hepática y ajustar terapias con riesgo hemorrágico."
+        }
+    ],
+
+    "default": "No se detectaron factores de riesgo modificables críticos. Se recomienda mantener un estilo de vida saludable y controles médicos de rutina."
+}

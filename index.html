@@ -1,34 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Evaluación EVCH</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Evaluación EVCH</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 <main class="container">
-  <h1>Evaluación Clínica EVCH</h1>
-  <p class="subtitle">Herramienta de screening aditivo basada en factores clínicos.</p>
+    <h1>Evaluación Clínica EVCH</h1>
+    <p class="subtitle">Herramienta de screening aditivo basada en factores clínicos.</p>
 
-  <form id="riskForm"></form>
+    <form id="riskForm"></form>
 
-  <div class="actions">
-    <button type="button" id="calculateBtn">Calcular Riesgo</button>
-    <button type="button" id="clearBtn">Limpiar Campos</button>
-  </div>
+    <div class="actions">
+        <button type="button" id="calculateBtn">Calcular Riesgo</button>
+        <button type="button" id="clearBtn">Limpiar Campos</button>
+    </div>
 
-  <section id="results" hidden>
-    <h2>Resultado</h2>
-    <div id="scoreBadge"></div>
-    <ul id="riskDetails"></ul>
-    <ul id="recommendations"></ul>
-    <button id="downloadBtn">Descargar Reporte</button>
-  </section>
+    <section id="results" hidden>
+        <h2>Resultado</h2>
+        <div id="scoreBadge"></div>
+        <ul id="riskDetails"></ul>
+        <ul id="recommendations"></ul>
+        <button id="downloadBtn">Descargar Reporte</button>
+    </section>
 
-  <footer class="disclaimer">
-    ⚠️ Esta herramienta es solo para screening. No sustituye evaluación médica.
-  </footer>
+    <div id="riskSummary" class="risk-card hidden">
+        <h3>Resumen de Riesgo EVCH</h3>
+
+        <div class="score-line">
+            <span>Puntaje:</span>
+            <strong id="scoreRatio"></strong>
+        </div>
+
+        <div class="score-line">
+            <span>Índice de Riesgo:</span>
+            <strong id="scorePercentile"></strong>
+        </div>
+
+        <div id="riskBadge" class="risk-badge"></div>
+
+        <div class="progress-container">
+            <div id="riskProgress" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <footer class="disclaimer">
+        ⚠️ Esta herramienta es solo para screening. No sustituye evaluación médica.
+    </footer>
 </main>
 
 <script src="app.js"></script>

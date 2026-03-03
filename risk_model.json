@@ -8,7 +8,7 @@
   "questions": [
     {
       "id": "pas",
-      "label": "¿Cuánto es tu PAS?",
+      "label": "Presion Arterial Sistólica",
       "type": "numeric",
       "category": "Enfermedades no Transmisibles",
       "thresholds": [
@@ -18,8 +18,19 @@
       ]
     },
     {
+      "id": "pad",
+      "label": "Presion Arterial Diastólica",
+      "type": "numeric",
+      "category": "Enfermedades no Transmisibles",
+      "thresholds": [
+        { "max": 129, "points": 0 },
+        { "max": 160, "points": 0 },
+        { "min": 161, "points": 0 }
+      ]
+    },
+    {
       "id": "glucosa",
-      "label": "¿Cuánto es tu nivel de glucosa?",
+      "label": "Glucosa",
       "type": "numeric",
       "category": "Enfermedades no Transmisibles",
       "thresholds": [
@@ -44,10 +55,7 @@
       "label": "Sexo",
       "type": "binary",
       "category": "Datos Personales",
-      "options": {
-        "Mujer": 1,
-        "Hombre": 2
-      }
+      "options": { "Mujer": 1, "Hombre": 2 }
     },
 
     {
@@ -108,6 +116,27 @@
       "category": "Cáncer",
       "options": { "NO": 1, "SI": 2 }
     },
+    {
+      "id": "hemangioblastoma",
+      "label": "Hemangioblastoma",
+      "type": "binary",
+      "category": "Cáncer",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "adenoma",
+      "label": "Adenoma Pituitario",
+      "type": "binary",
+      "category": "Cáncer",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "metastasis",
+      "label": "Metástasis Cerebral",
+      "type": "binary",
+      "category": "Cáncer",
+      "options": { "NO": 1, "SI": 2 }
+    },
 
     {
       "id": "antiagregacion",
@@ -119,6 +148,47 @@
         "SIMPLE": 2,
         "DUAL": 3
       }
+    },
+    {
+      "id": "anticonceptivos",
+      "label": "Anticonceptivos Orales",
+      "type": "binary",
+      "category": "Medicamentos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+
+    {
+      "id": "embarazo",
+      "label": "Embarazo",
+      "type": "binary",
+      "category": "Antecedentes Médicos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "nafld",
+      "label": "NAFLD",
+      "type": "binary",
+      "category": "Antecedentes Médicos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "fibrosis",
+      "label": "Fibrosis Hepática Avanzada",
+      "type": "binary",
+      "category": "Antecedentes Médicos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "microbleed",
+      "label": "Microsangrado Cerebrales Previos",
+      "type": "categorical",
+      "category": "Antecedentes Médicos",
+      "options": { 
+        "CERO (0)": 1, 
+        "HASTA CUATRO (<=4)": 2,  
+        "CINCO O MÁS (5+)": 3
+      }
     }
+    
   ]
 }

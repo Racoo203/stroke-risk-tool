@@ -53,3 +53,54 @@ button {
   font-size: 0.8rem;
   color: #555;
 }
+
+.risk-card {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.score-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.05em;
+  margin-bottom: 8px;
+}
+
+.risk-badge {
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.risk-low {
+  background: #d4edda;
+  color: #155724;
+}
+
+.risk-medium {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.risk-high {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.progress-container {
+  height: 12px;
+  background: #e9ecef;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+}
