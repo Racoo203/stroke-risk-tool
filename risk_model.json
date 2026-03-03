@@ -8,9 +8,10 @@
   "questions": [
     {
       "id": "pas",
-      "label": "Presion Arterial Sistólica",
+      "label": "Presion Arterial Sistólica (mmHg)",
       "type": "numeric",
       "category": "Enfermedades no Transmisibles",
+      "range": { "min": 50, "max": 300 },
       "thresholds": [
         { "max": 129, "points": 1 },
         { "max": 160, "points": 2 },
@@ -19,9 +20,10 @@
     },
     {
       "id": "pad",
-      "label": "Presion Arterial Diastólica",
+      "label": "Presion Arterial Diastólica (mmHg)",
       "type": "numeric",
       "category": "Enfermedades no Transmisibles",
+      "range": { "min": 25, "max": 200 },
       "thresholds": [
         { "max": 129, "points": 0 },
         { "max": 160, "points": 0 },
@@ -30,8 +32,9 @@
     },
     {
       "id": "glucosa",
-      "label": "Glucosa",
+      "label": "Glucosa (mg / dL)",
       "type": "numeric",
+      "range": { "min": 25, "max": 600 },
       "category": "Enfermedades no Transmisibles",
       "thresholds": [
         { "max": 119, "points": 1 },
@@ -41,8 +44,9 @@
     },
     {
       "id": "edad",
-      "label": "Edad",
+      "label": "Edad (años)",
       "type": "numeric",
+      "range": { "min": 0, "max": 120 },
       "category": "Datos Personales",
       "thresholds": [
         { "max": 54, "points": 1 },

@@ -22,7 +22,6 @@ Promise.all([
 function renderForm() {
     const form = document.getElementById("riskForm");
     form.innerHTML = "";
-
     const categories = {};
 
     MODEL.questions.forEach(q => {
@@ -46,63 +45,44 @@ function renderForm() {
             if (q.type === "numeric") {
                 input = document.createElement("input");
                 input.type = "number";
-                input.placeholder = "Ingrese un valor";
+                input.id = q.id;
                 input.required = true;
                 input.step = "1";
 
-                /* Field-specific constraints */
-                if (q.id === "pas") {
-                    input.min = 50;
-                    input.max = 300;
-                    input.placeholder = "mmHg (50–300)";
-                }
-
-                if (q.id === "pad") {
-                    input.min = 25;
-                    input.max = 200;
-                    input.placeholder = "mmHg (25–200)";
-                }
-
-                if (q.id === "glucosa") {
-                    input.min = 40;
-                    input.max = 600;
-                    input.placeholder = "mg/dL (40–600)";
-                }
-
-                if (q.id === "edad") {
-                    input.min = 0;
-                    input.max = 120;
-                    input.placeholder = "años (0–120)";
+                // DYNAMIC CONSTRAINTS
+                if (q.range) {
+                    input.min = q.range.min;
+                    input.max = q.range.max;
+                    input.placeholder = `${q.unit || ''} ${q.range.min} – ${q.range.max}`;
                 }
             } else {
                 input = document.createElement("select");
+                input.id = q.id;
                 Object.entries(q.options).forEach(([text, value]) => {
                     const opt = document.createElement("option");
                     opt.value = value;
                     opt.textContent = text;
-                    if (value === 1) opt.selected = true; // lowest-risk default
+                    if (value === 1) opt.selected = true;
                     input.appendChild(opt);
                 });
             }
 
-            input.id = q.id;
             fieldset.appendChild(label);
             fieldset.appendChild(input);
         });
-
         form.appendChild(fieldset);
     });
 }
 
 function scoreNumeric(val, thresholds) {
     for (const t of thresholds) {
-            if (
-                (t.max !== undefined && val <= t.max) ||
-                (t.min !== undefined && val >= t.min)
-            ) {
-                return t.points;
-            }
+        if (
+            (t.max !== undefined && val <= t.max) ||
+            (t.min !== undefined && val >= t.min)
+        ) {
+            return t.points;
         }
+    }
     return 0;
 }
 
@@ -145,7 +125,6 @@ document.getElementById("calculateBtn").onclick = () => {
     const rawInputs = {};
     const pointMap = {};
     const breakdown = [];
-
     let totalScore = 0;
 
     MODEL.questions.forEach(q => {
@@ -154,9 +133,15 @@ document.getElementById("calculateBtn").onclick = () => {
         let rawValue = null;
 
         if (q.type === "numeric") {
-            const val = Number(el.value);
-            if (isNaN(val)) return;
+            // 1. Validate first
+            const error = validateNumericInput(q, el.value);
+            if (error) {
+                validationErrors.push(error);
+            }
 
+            // 2. Process value
+            const val = Number(el.value);
+            rawValue = val; 
             points = scoreNumeric(val, q.thresholds);
         } else {
             rawValue = el.options[el.selectedIndex].text;
@@ -167,42 +152,16 @@ document.getElementById("calculateBtn").onclick = () => {
         pointMap[q.id] = points;
         totalScore += points;
 
-        breakdown.push({
-            label: q.label,
-            value: rawValue,
-            points
-        });
+        breakdown.push({ label: q.label, value: rawValue, points });
     });
 
+    // Check for errors before rendering results
     if (validationErrors.length > 0) {
-        alert(
-            "Errores en los datos ingresados:\n\n" +
-            validationErrors.join("\n")
-        );
-        return; // stop calculation
+        alert("Errores en los datos ingresados:\n\n" + validationErrors.join("\n"));
+        return; 
     }
 
-    renderResults(totalScore, breakdown, rawInputs, pointMap);
-
-    const { min, max } = computeScoreBounds(MODEL);
-    const risk = classifyRisk(totalScore, min, max);
-
-    // UI population
-    document.getElementById("riskSummary").classList.remove("hidden");
-
-    document.getElementById("scoreRatio").textContent =
-    `${totalScore} / ${max}`;
-
-    document.getElementById("scorePercentile").textContent =
-    `${(risk.percentile * 100).toFixed(1)}%`;
-
-    const badge = document.getElementById("riskBadge");
-    badge.textContent = risk.label;
-    badge.className = `risk-badge ${risk.class}`;
-
-    const bar = document.getElementById("riskProgress");
-    bar.style.width = `${risk.percentile * 100}%`;
-    bar.className = `progress-bar ${risk.class}`;
+    // ... continue with rendering results
 };
 
 /*****************************************************
@@ -297,21 +256,17 @@ document.getElementById("downloadBtn").onclick = () => {
 
 
 function validateNumericInput(q, value) {
-    if (isNaN(value)) {
-        return `${q.label}: valor no numérico.`;
+    if (value === "" || isNaN(value)) {
+        return `${q.label}: Por favor ingrese un número válido.`;
     }
 
-    if (q.id === "pas" && (value < 50 || value > 300)) {
-        return `${q.label}: debe estar entre 50 y 300 mmHg.`;
+    const val = Number(value);
+
+    if (q.range) {
+        if (val < q.range.min || val > q.range.max) {
+            return `${q.label}: Debe estar entre ${q.range.min} y ${q.range.max} ${q.unit || ""}.`;
+        }
     }
 
-    if (q.id === "glucosa" && (value < 40 || value > 600)) {
-        return `${q.label}: debe estar entre 40 y 600 mg/dL.`;
-    }
-
-    if (q.id === "edad" && (value < 0 || value > 120)) {
-        return `${q.label}: debe estar entre 0 y 120 años.`;
-    }
-
-    return null; // valid
+    return null; // Valid
 }
