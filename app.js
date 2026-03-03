@@ -161,7 +161,27 @@ document.getElementById("calculateBtn").onclick = () => {
         return; 
     }
 
-    // ... continue with rendering results
+    renderResults(totalScore, breakdown, rawInputs, pointMap);
+
+    const { min, max } = computeScoreBounds(MODEL);
+    const risk = classifyRisk(totalScore, min, max);
+
+    // UI population
+    document.getElementById("riskSummary").classList.remove("hidden");
+
+    document.getElementById("scoreRatio").textContent =
+    `${totalScore} / ${max}`;
+
+    document.getElementById("scorePercentile").textContent =
+    `${(risk.percentile * 100).toFixed(1)}%`;
+
+    const badge = document.getElementById("riskBadge");
+    badge.textContent = risk.label;
+    badge.className = `risk-badge ${risk.class}`;
+
+    const bar = document.getElementById("riskProgress");
+    bar.style.width = `${risk.percentile * 100}%`;
+    bar.className = `progress-bar ${risk.class}`;
 };
 
 /*****************************************************
