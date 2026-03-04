@@ -65,17 +65,6 @@
     },
 
     {
-      "id": "microbleed",
-      "label": "Microsangrado Cerebrales Previos",
-      "type": "categorical",
-      "category": "Antecedentes Médicos",
-      "options": { 
-        "Cero (0)": 1, 
-        "Hasta cuatro (<=4)": 2,  
-        "Cinco o más (5+)": 3
-      }
-    },
-    {
       "id": "embarazo",
       "label": "Embarazo",
       "type": "binary",
@@ -110,6 +99,17 @@
       "type": "binary",
       "category": "Mutaciones",
       "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "microbleed",
+      "label": "Microsangrado Cerebrales Previos",
+      "type": "categorical",
+      "category": "Antecedentes Médicos",
+      "options": { 
+        "Cero (0)": 1, 
+        "Hasta cuatro (<=4)": 2,  
+        "Cinco o más (5+)": 3
+      }
     },
 
     {
@@ -178,6 +178,13 @@
     },
 
     {
+      "id": "anticonceptivos",
+      "label": "Anticonceptivos Orales",
+      "type": "binary",
+      "category": "Medicamentos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
       "id": "antiagregacion",
       "label": "Terapia Antiplaquetaria",
       "type": "categorical",
@@ -187,14 +194,7 @@
         "Simple": 2,
         "Dual": 3
       }
-    },
-    {
-      "id": "anticonceptivos",
-      "label": "Anticonceptivos Orales",
-      "type": "binary",
-      "category": "Medicamentos",
-      "options": { "NO": 1, "SI": 2 }
     }
-
+    
   ]
 }
