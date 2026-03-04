@@ -1,106 +1,234 @@
+/* --- UI Reset & Base Styles --- */
+* {
+    box-sizing: border-box; /* Prevents padding from breaking width */
+}
+
 body {
-  font-family: system-ui, sans-serif;
-  background: #f4f7f6;
-  padding: 20px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.5;
+    margin: 0;
+    padding: 2rem 1rem;
 }
 
 .container {
-  max-width: 760px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+h1 {
+    margin-top: 0;
+    color: #1a202c;
+    font-size: 1.75rem;
+}
+
+.subtitle {
+    color: #718096;
+    margin-bottom: 2rem;
+}
+
+/* --- Form Elements --- */
 fieldset {
-  border: none;
-  margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    /* padding: 1rem; */
+    margin-bottom: 1rem;
+    background-color: #fcfcfc;
 }
 
 legend {
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #0056b3;
+    font-weight: 700;
+    padding: 0 10px;
+    color: #2b6cb0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 label {
-  display: block;
-  margin: 8px 0 4px;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
-input, select {
-  width: 100%;
-  padding: 8px;
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 1rem;
 }
 
+input:focus, select:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+/* --- Checklists --- */
+.checklist-item {
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.checklist-item:hover {
+    background-color: #edf2f7;
+}
+
+.checklist-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.checklist-item label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: 400;
+    flex: 1;
+}
+
+/* --- Buttons & Actions --- */
 .actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    margin-top: 2rem;
 }
 
 button {
-  padding: 12px;
-  flex: 1;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.2s;
+    flex: 1;
 }
 
-#results {
-  margin-top: 30px;
+button:active {
+    transform: translateY(1px);
 }
 
-.disclaimer {
-  margin-top: 20px;
-  font-size: 0.8rem;
-  color: #555;
+#calculateBtn {
+    background-color: #3182ce;
+    color: white;
 }
 
+#calculateBtn:hover {
+    background-color: #2b6cb0;
+}
+
+#clearBtn {
+    background-color: #edf2f7;
+    color: #4a5568;
+}
+
+#clearBtn:hover {
+    background-color: #e2e8f0;
+}
+
+#downloadBtn {
+    margin-top: 1rem;
+    background-color: #38a169;
+    color: white;
+    width: 100%;
+}
+
+#downloadBtn:hover {
+    background-color: #2f855a;
+}
+
+/* --- Results Section --- */
+.result-container {
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.result-container h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+#container-estadisticas {
+    background-color: #fffaf0;
+    border-left: 5px solid #ed8936;
+    color: #7b341e;
+}
+
+#container-recomendaciones {
+    background-color: #ebf8ff;
+    border-left: 5px solid #3182ce;
+    color: #2c5282;
+}
+
+.score-summary-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* --- Risk Card & Badge --- */
 .risk-card {
-  margin-top: 20px;
-  padding: 18px;
-  border-radius: 12px;
-  background: #f8f9fa;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-}
-
-.score-line {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.05em;
-  margin-bottom: 8px;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
 }
 
 .risk-badge {
-  margin: 12px 0;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: bold;
-  text-align: center;
-  font-size: 1.1em;
+    margin: 1rem 0;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.risk-low {
-  background: #d4edda;
-  color: #155724;
-}
-
-.risk-medium {
-  background: #fff3cd;
-  color: #856404;
-}
-
-.risk-high {
-  background: #f8d7da;
-  color: #721c24;
-}
+.risk-low { background: #c6f6d5; color: #22543d; }
+.risk-medium { background: #feebc8; color: #744210; }
+.risk-high { background: #fed7d7; color: #822727; }
 
 .progress-container {
-  height: 12px;
-  background: #e9ecef;
-  border-radius: 6px;
-  overflow: hidden;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 .progress-bar {
-  height: 100%;
-  transition: width 0.5s ease;
+    height: 100%;
+    border-radius: 5px;
 }
+
+/* --- Footer --- */
+.disclaimer {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.8rem;
+    color: #a0aec0;
+    text-align: center;
+}
+
+/* Helper Utilities */
+.hidden { display: none; }

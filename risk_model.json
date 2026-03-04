@@ -6,6 +6,27 @@
   },
 
   "questions": [
+
+    {
+      "id": "edad",
+      "label": "Edad (años)",
+      "type": "numeric",
+      "range": { "min": 0, "max": 120 },
+      "category": "Datos Personales",
+      "thresholds": [
+        { "max": 54, "points": 1 },
+        { "max": 64, "points": 2 },
+        { "min": 65, "points": 3 }
+      ]
+    },
+    {
+      "id": "sexo",
+      "label": "Sexo",
+      "type": "categorical",
+      "category": "Datos Personales",
+      "options": { "Mujer": 1, "Hombre": 2 }
+    },
+
     {
       "id": "pas",
       "label": "Presion Arterial Sistólica (mmHg)",
@@ -42,24 +63,38 @@
         { "min": 201, "points": 3 }
       ]
     },
+
     {
-      "id": "edad",
-      "label": "Edad (años)",
-      "type": "numeric",
-      "range": { "min": 0, "max": 120 },
-      "category": "Datos Personales",
-      "thresholds": [
-        { "max": 54, "points": 1 },
-        { "max": 64, "points": 2 },
-        { "min": 65, "points": 3 }
-      ]
+      "id": "microbleed",
+      "label": "Microsangrado Cerebrales Previos",
+      "type": "categorical",
+      "category": "Antecedentes Médicos",
+      "options": { 
+        "Cero (0)": 1, 
+        "Hasta cuatro (<=4)": 2,  
+        "Cinco o más (5+)": 3
+      }
     },
     {
-      "id": "sexo",
-      "label": "Sexo",
+      "id": "embarazo",
+      "label": "Embarazo",
       "type": "binary",
-      "category": "Datos Personales",
-      "options": { "Mujer": 1, "Hombre": 2 }
+      "category": "Antecedentes Médicos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "nafld",
+      "label": "NAFLD",
+      "type": "binary",
+      "category": "Antecedentes Médicos",
+      "options": { "NO": 1, "SI": 2 }
+    },
+    {
+      "id": "fibrosis",
+      "label": "Fibrosis Hepática Avanzada",
+      "type": "binary",
+      "category": "Antecedentes Médicos",
+      "options": { "NO": 1, "SI": 2 }
     },
 
     {
@@ -148,9 +183,9 @@
       "type": "categorical",
       "category": "Medicamentos",
       "options": {
-        "NO": 1,
-        "SIMPLE": 2,
-        "DUAL": 3
+        "Ninguno": 1,
+        "Simple": 2,
+        "Dual": 3
       }
     },
     {
@@ -159,40 +194,7 @@
       "type": "binary",
       "category": "Medicamentos",
       "options": { "NO": 1, "SI": 2 }
-    },
-
-    {
-      "id": "embarazo",
-      "label": "Embarazo",
-      "type": "binary",
-      "category": "Antecedentes Médicos",
-      "options": { "NO": 1, "SI": 2 }
-    },
-    {
-      "id": "nafld",
-      "label": "NAFLD",
-      "type": "binary",
-      "category": "Antecedentes Médicos",
-      "options": { "NO": 1, "SI": 2 }
-    },
-    {
-      "id": "fibrosis",
-      "label": "Fibrosis Hepática Avanzada",
-      "type": "binary",
-      "category": "Antecedentes Médicos",
-      "options": { "NO": 1, "SI": 2 }
-    },
-    {
-      "id": "microbleed",
-      "label": "Microsangrado Cerebrales Previos",
-      "type": "categorical",
-      "category": "Antecedentes Médicos",
-      "options": { 
-        "CERO (0)": 1, 
-        "HASTA CUATRO (<=4)": 2,  
-        "CINCO O MÁS (5+)": 3
-      }
     }
-    
+
   ]
 }

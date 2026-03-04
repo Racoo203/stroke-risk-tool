@@ -30,8 +30,9 @@ Esta herramienta **NO es diagnóstica**, no sustituye la evaluación médica pro
 ## 🧩 Estructura del Proyecto
 
 ```text
-├── index.html             # Estructura principal de la aplicación
-├── styles.css             # Estilos y diseño visual
 ├── app.js                 # Lógica de la aplicación (render, scoring, UI)
-├── risk_model.json        # Definición del modelo de riesgo (preguntas y puntajes)
+├── index.html             # Estructura principal de la aplicación
+├── README.md              # Documentación del proyecto
 ├── recommendations.json   # Motor declarativo de recomendaciones clínicas
+├── risk_model.json        # Definición del modelo de riesgo (preguntas y puntajes)
+├── styles.css             # Estilos y diseño visual

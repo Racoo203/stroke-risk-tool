@@ -36,39 +36,56 @@ function renderForm() {
         fieldset.appendChild(legend);
 
         questions.forEach(q => {
-            const label = document.createElement("label");
-            label.setAttribute("for", q.id);
-            label.textContent = q.label;
-
             let input;
 
             if (q.type === "numeric") {
+                const label = document.createElement("label");
+                label.textContent = q.label;
                 input = document.createElement("input");
                 input.type = "number";
                 input.id = q.id;
-                input.required = true;
-                input.step = "1";
-
-                // DYNAMIC CONSTRAINTS
+                
                 if (q.range) {
                     input.min = q.range.min;
                     input.max = q.range.max;
                     input.placeholder = `${q.unit || ''} ${q.range.min} – ${q.range.max}`;
                 }
+
+                fieldset.appendChild(label);
+                fieldset.appendChild(input);
+
+            } else if (q.type === "binary") {
+                // CHECKLIST ITEM
+                const container = document.createElement("div");
+                container.className = "checklist-item";
+                
+                input = document.createElement("input");
+                input.type = "checkbox";
+                input.id = q.id;
+                
+                const label = document.createElement("label");
+                label.setAttribute("for", q.id);
+                label.textContent = q.label;
+
+                container.appendChild(input);
+                container.appendChild(label);
+                fieldset.appendChild(container);
+
             } else {
+                // CATEGORICAL (Dropdown)
+                const label = document.createElement("label");
+                label.textContent = q.label;
                 input = document.createElement("select");
                 input.id = q.id;
                 Object.entries(q.options).forEach(([text, value]) => {
                     const opt = document.createElement("option");
                     opt.value = value;
                     opt.textContent = text;
-                    if (value === 1) opt.selected = true;
                     input.appendChild(opt);
                 });
+                fieldset.appendChild(label);
+                fieldset.appendChild(input);
             }
-
-            fieldset.appendChild(label);
-            fieldset.appendChild(input);
         });
         form.appendChild(fieldset);
     });
@@ -91,15 +108,16 @@ function computeScoreBounds(model) {
     let max = 0;
 
     model.questions.forEach(q => {
-    if (q.type === "numeric") {
-        const pts = q.thresholds.map(t => t.points);
-        min += Math.min(...pts);
-        max += Math.max(...pts);
-    } else {
-        const pts = Object.values(q.options);
-        min += Math.min(...pts);
-        max += Math.max(...pts);
-    }
+        if (q.type === "numeric") {
+            const pts = q.thresholds.map(t => t.points);
+            min += Math.min(...pts);
+            max += Math.max(...pts);
+        } else {
+            // This works for both "binary" and "categorical"
+            const pts = Object.values(q.options);
+            min += Math.min(...pts);
+            max += Math.max(...pts);
+        }
     });
 
     return { min, max };
@@ -127,23 +145,27 @@ document.getElementById("calculateBtn").onclick = () => {
     const breakdown = [];
     let totalScore = 0;
 
+    // Inside document.getElementById("calculateBtn").onclick ...
     MODEL.questions.forEach(q => {
         const el = document.getElementById(q.id);
         let points = 0;
         let rawValue = null;
 
         if (q.type === "numeric") {
-            // 1. Validate first
             const error = validateNumericInput(q, el.value);
-            if (error) {
-                validationErrors.push(error);
-            }
-
-            // 2. Process value
+            if (error) validationErrors.push(error);
             const val = Number(el.value);
             rawValue = val; 
             points = scoreNumeric(val, q.thresholds);
-        } else {
+        } 
+        else if (q.type === "binary") {
+            // If checked, use the 'SI' points. If not, use 'NO' points.
+            const isChecked = el.checked;
+            rawValue = isChecked ? "SI" : "NO";
+            points = isChecked ? q.options["SI"] : q.options["NO"];
+        } 
+        else {
+            // Categorical dropdown
             rawValue = el.options[el.selectedIndex].text;
             points = Number(el.value);
         }
@@ -151,7 +173,6 @@ document.getElementById("calculateBtn").onclick = () => {
         rawInputs[q.id] = rawValue;
         pointMap[q.id] = points;
         totalScore += points;
-
         breakdown.push({ label: q.label, value: rawValue, points });
     });
 
@@ -195,12 +216,10 @@ function renderResults(totalScore, breakdown, rawInputs, pointMap) {
 
     resultsSection.hidden = false;
 
-    scoreBadge.textContent = `Puntaje Total EVCH: ${totalScore}`;
+    scoreBadge.innerHTML = `Puntaje Total Calculado: <u>${totalScore} puntos</u>`;
 
     detailsList.innerHTML = breakdown
-        .map(
-            b =>`<li><strong>${b.label}:</strong> ${b.value} → ${b.points} puntos</li>`
-        )
+        .map(b => `<li><strong>${b.label}:</strong> ${b.value} &rarr; ${b.points} pts</li>`)
         .join("");
 
     const generatedRecs = generateRecommendations(rawInputs, pointMap);

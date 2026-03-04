@@ -19,11 +19,22 @@
     </div>
 
     <section id="results" hidden>
-        <h2>Resultado</h2>
-        <div id="scoreBadge"></div>
-        <ul id="riskDetails"></ul>
-        <ul id="recommendations"></ul>
-        <button id="downloadBtn">Descargar Reporte</button>
+        <h2>Resultado de la Evaluación</h2>
+        
+        <div id="container-estadisticas" class="result-container">
+            <h3>Desglose de Puntos y Estadísticas</h3>
+            <div id="scoreBadge" class="score-summary-text"></div>
+            <ul id="riskDetails"></ul>
+        </div>
+
+        <div id="container-recomendaciones" class="result-container">
+            <h3>Recomendaciones Clínicas</h3>
+            <ul id="recommendations"></ul>
+        </div>
+
+        <div class="actions">
+            <button id="downloadBtn">Descargar Reporte</button>
+        </div>
     </section>
 
     <div id="riskSummary" class="risk-card hidden">
